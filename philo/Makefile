@@ -1,9 +1,9 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 NAME = philo
 
 SRCS_DIR = ./srcs/
-SRCS_FILES = philo.c check.c utils.c init.c
+SRCS_FILES = philo.c check.c utils.c init.c forks.c threads.c
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 OBJ_DIR = ./obj/
