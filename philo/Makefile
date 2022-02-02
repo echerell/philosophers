@@ -1,9 +1,11 @@
 CC = gcc
+#DEBUG = -g -fsanitize=thread
+DEBUG = -g -fsanitize=leak -fsanitize=thread
 CFLAGS = -Wall -Wextra -Werror -pthread
 NAME = philo
 
 SRCS_DIR = ./srcs/
-SRCS_FILES = philo.c check.c utils.c init.c forks.c threads.c
+SRCS_FILES = philo.c check.c utils.c init.c forks.c threads.c cycle.c
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_FILES))
 
 OBJ_DIR = ./obj/
@@ -16,7 +18,7 @@ PHILO_INCLUDE_FILE = ./include/philo.h
 all: $(NAME)
 
 $(NAME): $(OBJS) $(PHILO_INCLUDE_FILE)
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) $(DEBUG) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)%.o:$(SRCS_DIR)%.c
 	mkdir -p $(OBJ_DIR)

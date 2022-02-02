@@ -6,11 +6,28 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 21:52:25 by echerell          #+#    #+#             */
-/*   Updated: 2022/01/30 23:58:44 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/03 01:20:26 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		take_forks(t_philo *philo)
+{
+	pthread_mutex_lock(philo->forkl);
+	if (*philo->dead)
+		return (0);
+	pthread_mutex_lock(philo->print);
+	printf("%lu ms %u has taken a fork\n", get_ts(philo->time), philo->id);
+	pthread_mutex_unlock(philo->print);
+	pthread_mutex_lock(philo->forkr);
+	if (*philo->dead)
+		return (0);
+	pthread_mutex_lock(philo->print);
+	printf("%lu ms %u has taken a fork\n", get_ts(philo->time), philo->id);
+	pthread_mutex_unlock(philo->print);
+	return (1);
+}
 
 void	make_forks(t_philo *philo, size_t index, pthread_mutex_t *forks,
 					unsigned int nb_philo)
@@ -43,4 +60,16 @@ void	destroy_forks(pthread_mutex_t *forks, unsigned int nb_philo)
 		i++;
 	}
 	free(forks);
+}
+
+void	unlock_forks(pthread_mutex_t *forks, unsigned int nb_philo)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_mutex_unlock(&forks[i]);
+		i++;
+	}
 }
