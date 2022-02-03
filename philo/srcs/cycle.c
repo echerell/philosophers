@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 22:41:13 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/03 00:32:21 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:25:55 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,50 @@ int		is_dead(t_philo *philo)
 
 }
 
+static int	eating(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->lunch_time);
+	philo->last_meal = get_time();
+	pthread_mutex_lock(philo->print);
+	printf("%lu ms %u is eating\n", get_ts(philo->time), philo->id);
+	pthread_mutex_unlock(philo->print);
+	usleep(philo->indata->tte * 1000);
+	philo->meal_count++;
+	pthread_mutex_unlock(philo->forkl);
+	pthread_mutex_unlock(philo->forkr);
+	if (*philo->dead)
+		return (0);
+	return (1);
+}
+
+static int	sleeping(t_philo *philo)
+{
+	pthread_mutex_lock(philo->print);
+	printf("%lu ms %u is sleeping\n", get_ts(philo->time), philo->id);
+	pthread_mutex_unlock(philo->print);
+	usleep(philo->indata->tts * 1000);
+	if (*philo->dead)
+		return (0);
+	pthread_mutex_lock(philo->print);
+	printf("%lu ms %u is thinking\n", get_ts(philo->time), philo->id);
+	pthread_mutex_unlock(philo->print);
+	return (1);
+}
+
 void	*cycle(void *arg)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2)
-		usleep(200);
+		usleep(2000);
 	while (!(*philo->dead))
 	{
 		if (!take_forks(philo))
+			break;
+		if (!eating(philo))
+			break;
+		if (!sleeping(philo))
 			break;
 	}
 	pthread_mutex_destroy(&philo->lunch_time);

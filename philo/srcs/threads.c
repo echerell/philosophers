@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 23:19:16 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/03 01:18:31 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/04 01:34:54 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,20 @@ static int	check_philo(t_philo *philos, unsigned int nb_philo)
 	return (0);
 }
 
+static int	check_meals(t_philo *philos, unsigned int nb_philo, long nb_meals)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < nb_philo)
+	{
+		if (philos[i].meal_count < nb_meals)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static int	check_threads(t_indata *indata, t_philo *philos,
 							pthread_mutex_t *forks)
 {
@@ -52,6 +66,12 @@ static int	check_threads(t_indata *indata, t_philo *philos,
 	while (!(*philos->dead))
 	{
 		check_philo(philos, indata->nb_philo);
+		if (!(*philos->dead) && indata->nb_meals > 0
+			&& check_meals(philos, indata->nb_philo, indata->nb_meals))
+		{
+			*philos->dead = 1;
+			printf("All philosophers have eaten necessary number of meals\n");
+		}
 	}
 	i = 0;
 	unlock_forks(forks, indata->nb_philo);
@@ -61,7 +81,6 @@ static int	check_threads(t_indata *indata, t_philo *philos,
 			return (EXIT_FAILURE);
 		i++;
 	}
-
 	free(philos);
 	return (EXIT_SUCCESS);
 }

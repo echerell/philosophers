@@ -1,7 +1,7 @@
 CC = gcc
-#DEBUG = -g -fsanitize=thread
 DEBUG = -g -fsanitize=leak -fsanitize=thread
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror
+THREAD_FLAG = -pthread
 NAME = philo
 
 SRCS_DIR = ./srcs/
@@ -18,7 +18,7 @@ PHILO_INCLUDE_FILE = ./include/philo.h
 all: $(NAME)
 
 $(NAME): $(OBJS) $(PHILO_INCLUDE_FILE)
-	$(CC) $(DEBUG) $(OBJS) -o $(NAME)
+	$(CC) $(THREAD_FLAG) $(DEBUG) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)%.o:$(SRCS_DIR)%.c
 	mkdir -p $(OBJ_DIR)
