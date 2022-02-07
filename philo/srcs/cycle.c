@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 22:41:13 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/04 01:25:55 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/08 00:59:02 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	eating(t_philo *philo)
 	pthread_mutex_lock(philo->print);
 	printf("%lu ms %u is eating\n", get_ts(philo->time), philo->id);
 	pthread_mutex_unlock(philo->print);
+	pthread_mutex_unlock(&philo->lunch_time);
 	usleep(philo->indata->tte * 1000);
 	philo->meal_count++;
 	pthread_mutex_unlock(philo->forkl);
@@ -55,6 +56,8 @@ static int	eating(t_philo *philo)
 
 static int	sleeping(t_philo *philo)
 {
+	if (*philo->dead)
+		return (0);
 	pthread_mutex_lock(philo->print);
 	printf("%lu ms %u is sleeping\n", get_ts(philo->time), philo->id);
 	pthread_mutex_unlock(philo->print);
