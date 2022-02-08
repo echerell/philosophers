@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   philo_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/29 22:08:35 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 00:19:29 by echerell         ###   ########.fr       */
+/*   Created: 2022/02/08 23:43:23 by echerell          #+#    #+#             */
+/*   Updated: 2022/02/09 00:22:43 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
+
+static void	close_unlink(sem_t *print, sem_t *forks)
+{
+	sem_close(print);
+	sem_unlink("print");
+	sem_close(forks);
+	sem_unlink("forks");
+}
 
 int	main(int argc, char **argv)
 {
-	t_indata		indata;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print;
+	t_indata	indata;
+	sem_t		*forks;
+	sem_t		*print;
 
 	if (check_args(argc, argv))
 		return (EXIT_FAILURE);
@@ -27,13 +35,15 @@ int	main(int argc, char **argv)
 		printf("Philosophers don't want to eat\n");
 		return (EXIT_SUCCESS);
 	}
-	forks = NULL;
-	if (init_forks(&forks, indata.nb_philo))
+	forks = init_forks(indata.nb_philo);
+	if (forks == SEM_FAILED)
 		return (EXIT_FAILURE);
-	pthread_mutex_init(&print, NULL);
-	if (start_threads(&indata, forks, &print))
+	sem_unlink("print");
+	print = sem_open("print", O_CREAT, S_IRWXU | S_IRWXG, 1);
+	if (print == SEM_FAILED)
 		return (EXIT_FAILURE);
-	destroy_forks(forks, indata.nb_philo);
-	pthread_mutex_destroy(&print);
-	return (EXIT_SUCCESS);
+	if (start_childs(&indata, forks, print))
+		return (EXIT_FAILURE);
+	close_unlink(print, forks);
+	return(EXIT_SUCCESS);
 }

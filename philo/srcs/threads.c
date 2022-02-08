@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 23:19:16 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/04 01:34:54 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 00:48:55 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	make_philos(t_philo *philos, pthread_mutex_t *forks,
 						t_indata *indata, pthread_mutex_t *print)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < indata->nb_philo)
@@ -89,7 +89,7 @@ int	start_threads(t_indata *indata, pthread_mutex_t *forks,
 					pthread_mutex_t *print)
 {
 	t_philo			*philos;
-	size_t			i;
+	unsigned int	i;
 	struct timeval	ts;
 	int				dead;
 
