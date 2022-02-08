@@ -6,13 +6,13 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 22:41:13 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 02:17:27 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:31:18 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		is_dead(t_philo *philo)
+int	is_dead(t_philo *philo)
 {
 	unsigned long	sub;
 
@@ -79,11 +79,11 @@ void	*cycle(void *arg)
 	while (!(*philo->dead))
 	{
 		if (!take_forks(philo))
-			break;
+			break ;
 		if (!eating(philo))
-			break;
+			break ;
 		if (!sleeping(philo))
-			break;
+			break ;
 	}
 	pthread_mutex_destroy(&philo->lunch_time);
 	return (NULL);

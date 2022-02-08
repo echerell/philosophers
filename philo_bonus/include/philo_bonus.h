@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:43:05 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 01:57:08 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:58:16 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 # include <sys/types.h>
 # include <signal.h>
 
-enum arg_errs
+enum e_arg_errs
 {
 	NB_ERR = -10,
 	DIG_ERR,
 	ZERO_PHILO
 };
 
-enum exit_status
+enum e_exit_status
 {
 	FULL = 0,
 	DEAD,
@@ -64,23 +64,25 @@ typedef struct s_philo
 	unsigned long	last_meal;
 }t_philo;
 
-int		check_args(int argc, char **argv);
-void	print_err(int err_num);
+int				check_args(int argc, char **argv);
+void			print_err(int err_num);
 
-int		init_args(t_indata *indata, int argc, char **argv);
-sem_t	*init_forks(unsigned int nb_philo);
+int				init_args(t_indata *indata, int argc, char **argv);
+sem_t			*init_forks(unsigned int nb_philo);
 
-int		ft_atoi(const char *nptr);
-unsigned long	get_time();
+int				ft_atoi(const char *nptr);
+unsigned long	get_time(void);
 unsigned long	get_ts(struct timeval tv);
-char	*ft_itoa(int n);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	remove_block(sem_t *parent_block, unsigned int nb_philo);
-size_t	ft_strlen(const char *s);
+char			*ft_itoa(int n);
+char			*ft_strjoin(char const *s1, char const *s2);
+void			remove_block(sem_t *parent_block, unsigned int nb_philo);
+size_t			ft_strlen(const char *s);
 
-int	start_childs(t_indata *indata, sem_t *forks, sem_t *print);
+int				start_childs(t_indata *indata, sem_t *forks, sem_t *print);
+int				make_func(t_philo **philos, sem_t **parent_block,
+					unsigned int nb_philo);
 
-void	*cycle(void *arg);
-int		is_dead(t_philo *philo);
+void			*cycle(void *arg);
+int				is_dead(t_philo *philo);
 
 #endif

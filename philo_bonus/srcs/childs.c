@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:24:12 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 02:21:13 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:49:26 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	make_philos(t_philo *philos, sem_t *forks, t_indata *indata,
 		free(nb);
 		sem_unlink(philos[i].lunch_name);
 		philos[i].lunch_time = sem_open(philos[i].lunch_name, O_CREAT,
-							S_IRWXU | S_IRWXG, 1);
+				S_IRWXU | S_IRWXG, 1);
 		i++;
 	}
 }
@@ -46,19 +46,19 @@ static void	child_exe(t_philo *philo)
 	sem_wait(philo->parent_block);
 	philo->last_meal = get_time();
 	if (pthread_create(&thread, NULL, &cycle, philo)
-			|| pthread_detach(thread))
+		|| pthread_detach(thread))
 		exit(PTH_ERR);
 	while (1)
 	{
 		if (is_dead(philo))
 			exit(DEAD);
 		else if (philo->indata->nb_meals > 0
-				&& philo->meal_count >= philo->indata->nb_meals)
+			&& philo->meal_count >= philo->indata->nb_meals)
 			exit(FULL);
 	}
 }
 
-static void	remove_childs(t_philo *philos, unsigned int	nb_philo)
+static void	remove_childs(t_philo *philos, unsigned int nb_philo)
 {
 	unsigned int	i;
 
@@ -88,7 +88,7 @@ static int	check_childs(t_indata *indata, t_philo *philos)
 	{
 		waitpid(0, &status, 0);
 		if (WEXITSTATUS(status) != FULL)
-			break;
+			break ;
 		mark++;
 	}
 	if (indata->nb_meals < 0)
@@ -111,12 +111,7 @@ int	start_childs(t_indata *indata, sem_t *forks, sem_t *print)
 	sem_t			*parent_block;
 
 	i = 0;
-	philos = (t_philo *)malloc(indata->nb_philo * sizeof(t_philo));
-	if (!philos)
-		return (EXIT_FAILURE);
-	sem_unlink("parent_block");
-	parent_block = sem_open("parent_block", O_CREAT, S_IRWXU | S_IRWXG, 0);
-	if (parent_block == SEM_FAILED)
+	if (make_func(&philos, &parent_block, indata->nb_philo))
 		return (EXIT_FAILURE);
 	make_philos(philos, forks, indata, print);
 	gettimeofday(&ts, NULL);

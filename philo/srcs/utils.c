@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 22:52:30 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/03 00:04:54 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:30:44 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	check_numb(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
 			return (EXIT_FAILURE);
@@ -55,7 +55,7 @@ int	ft_atoi(const char *nptr)
 	return ((int)(n * sign));
 }
 
-unsigned long	get_time()
+unsigned long	get_time(void)
 {
 	struct timeval	tv;
 	unsigned long	ms;
@@ -71,7 +71,7 @@ unsigned long	get_ts(struct timeval tv)
 	unsigned long	sub;
 
 	gettimeofday(&cur_tv, NULL);
-	sub = (cur_tv.tv_sec * 1000 + cur_tv.tv_usec / 1000) -
-			(tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	sub = (cur_tv.tv_sec * 1000 + cur_tv.tv_usec / 1000)
+		- (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 	return (sub);
 }

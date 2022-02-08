@@ -6,13 +6,13 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:54:07 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 00:09:36 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:34:07 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int		init_args(t_indata *indata, int argc, char **argv)
+int	init_args(t_indata *indata, int argc, char **argv)
 {
 	indata->nb_philo = ft_atoi(argv[1]);
 	indata->ttd = ft_atoi(argv[2]);
@@ -32,7 +32,7 @@ int		init_args(t_indata *indata, int argc, char **argv)
 
 sem_t	*init_forks(unsigned int nb_philo)
 {
-	sem_t *forks;
+	sem_t	*forks;
 
 	sem_unlink("forks");
 	forks = sem_open("forks", O_CREAT, S_IRWXU | S_IRWXG, nb_philo);

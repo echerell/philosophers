@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:43:23 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 00:22:43 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:42:37 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int	main(int argc, char **argv)
 	if (start_childs(&indata, forks, print))
 		return (EXIT_FAILURE);
 	close_unlink(print, forks);
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

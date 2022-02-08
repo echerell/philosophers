@@ -6,11 +6,23 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/08 23:43:42 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 00:15:49 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:49:18 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+int	make_func(t_philo **philos, sem_t **parent_block, unsigned int nb_philo)
+{
+	*philos = (t_philo *)malloc(nb_philo * sizeof(t_philo));
+	if (!(*philos))
+		return (EXIT_FAILURE);
+	sem_unlink("parent_block");
+	*parent_block = sem_open("parent_block", O_CREAT, S_IRWXU | S_IRWXG, 0);
+	if (*parent_block == SEM_FAILED)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
 void	print_err(int err_num)
 {
@@ -35,7 +47,7 @@ static int	check_numb(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (!(str[i] >= '0' && str[i] <= '9'))
 			return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/09 00:16:13 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 01:33:01 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 02:34:42 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_atoi(const char *nptr)
 	return ((int)(n * sign));
 }
 
-unsigned long	get_time()
+unsigned long	get_time(void)
 {
 	struct timeval	tv;
 	unsigned long	ms;
@@ -85,8 +85,8 @@ unsigned long	get_ts(struct timeval tv)
 	unsigned long	sub;
 
 	gettimeofday(&cur_tv, NULL);
-	sub = (cur_tv.tv_sec * 1000 + cur_tv.tv_usec / 1000) -
-			(tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	sub = (cur_tv.tv_sec * 1000 + cur_tv.tv_usec / 1000)
+		- (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 	return (sub);
 }
 
