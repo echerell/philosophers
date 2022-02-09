@@ -1,5 +1,5 @@
 CC = gcc
-DEBUG = -g -fsanitize=leak -fsanitize=thread
+#DEBUG = -g -fsanitize=leak -fsanitize=thread
 CFLAGS = -Wall -Wextra -Werror
 THREAD_FLAG = -pthread
 NAME = philo_bonus
@@ -18,7 +18,7 @@ PHILO_INCLUDE_FILE = ./include/philo_bonus.h
 all: $(NAME)
 
 $(NAME): $(OBJS) $(PHILO_INCLUDE_FILE)
-	$(CC) $(THREAD_FLAG) $(DEBUG) $(OBJS) -o $(NAME)
+	$(CC) $(THREAD_FLAG) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR)%.o:$(SRCS_DIR)%.c
 	mkdir -p $(OBJ_DIR)

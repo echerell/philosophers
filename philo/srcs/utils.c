@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 22:52:30 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 02:30:44 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:38:32 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,16 @@ unsigned long	get_ts(struct timeval tv)
 	sub = (cur_tv.tv_sec * 1000 + cur_tv.tv_usec / 1000)
 		- (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 	return (sub);
+}
+
+void	destroy_lunch(t_philo *philos, unsigned int nb_philo)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < nb_philo)
+	{
+		pthread_mutex_destroy(&philos[i].lunch_time);
+		i++;
+	}
 }

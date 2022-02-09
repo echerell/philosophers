@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 23:19:16 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 00:48:55 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:54:42 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static int	check_threads(t_indata *indata, t_philo *philos,
 			&& check_meals(philos, indata->nb_philo, indata->nb_meals))
 		{
 			*philos->dead = 1;
+			usleep(5000);
 			printf("All philosophers have eaten necessary number of meals\n");
 		}
 	}
@@ -81,6 +82,7 @@ static int	check_threads(t_indata *indata, t_philo *philos,
 			return (EXIT_FAILURE);
 		i++;
 	}
+	destroy_lunch(philos, indata->nb_philo);
 	free(philos);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 22:07:59 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 02:33:15 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:38:39 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void			make_forks(t_philo *philo, size_t index, pthread_mutex_t *forks,
 int				take_forks(t_philo *philo);
 void			unlock_forks(pthread_mutex_t *forks, unsigned int nb_philo);
 void			destroy_forks(pthread_mutex_t *forks, unsigned int nb_philo);
+void			destroy_lunch(t_philo *philos, unsigned int nb_philo);
 
 int				start_threads(t_indata *indata, pthread_mutex_t *forks,
 					pthread_mutex_t *print);

@@ -6,7 +6,7 @@
 /*   By: echerell <echerell@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/02 22:41:13 by echerell          #+#    #+#             */
-/*   Updated: 2022/02/09 02:31:18 by echerell         ###   ########.fr       */
+/*   Updated: 2022/02/09 14:37:41 by echerell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,5 @@ void	*cycle(void *arg)
 		if (!sleeping(philo))
 			break ;
 	}
-	pthread_mutex_destroy(&philo->lunch_time);
 	return (NULL);
 }
